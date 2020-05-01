@@ -1,5 +1,7 @@
 # DecideRoo
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Qiw3vVy_eN8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Scope
 
 A simple set of tools to facilitate the decision-making process for indecisive individuals like myself. There will be three tools that can be interchangeably be used to examine the decision to be made:
