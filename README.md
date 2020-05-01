@@ -1,6 +1,7 @@
 # DecideRoo
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Qiw3vVy_eN8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<a href="https://www.youtube.com/embed/Qiw3vVy_eN8"><img src="http://img.youtube.com/vi/Qiw3vVy_eN8/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 ## Scope
 
