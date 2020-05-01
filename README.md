@@ -5,7 +5,7 @@ alt="jump to conclusions mat from office space" width="240" height="180" border=
 
 ## Scope
 
-A simple set of tools to facilitate the decision-making process for indecisive individuals like myself. There will be three tools that can be interchangeably be used to examine the decision to be made:
+A simple set of tools to facilitate the decision-making process for indecisive individuals like myself. There will be three tools that can be interchangeably be used to examine each decision to be made:
 
 1. Jump to Conclusions - think angry birds featuring a kangaroo that lands at random on one of your options.
 2. 6 hats - consider your conundrum from 6 different perspectives, drag & drop your decision options to what you think each perspective might endorse, and optionally discuss each perspective.
