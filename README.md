@@ -1,7 +1,7 @@
 # DecideRoo
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=Qiw3vVy_eN8" target="_blank"><img src="http://img.youtube.com/vi/Qiw3vVy_eN8/1.jpg" 
-alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=sDEL4Ty950Q" target="_blank"><img src="http://img.youtube.com/vi/sDEL4Ty950Q/0.jpg" 
+alt="jump to conclusions mat from office space" width="240" height="180" border="10" /></a>
 
 ## Scope
 
