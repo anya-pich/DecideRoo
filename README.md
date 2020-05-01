@@ -22,31 +22,38 @@ A simple set of tools to facilitate the decision-making process for indecisive i
 
 ## Wireframes
 
+![main page wireframe](readme/problemdefinition.jpeg)
 
+![main page tiles](readme/tiles.png)
+
+![jump2conclusions wireframe](readme/jump2conclusions.jpeg)
+
+![six hats wireframe](readme/6hats.png)
 
 ## Data Models
 
 
+
 ## Milestones
 
-### MVP
+#### MVP
 Fri 1 - Tue 5
 - Homepage with defining the decision
 - Jump to conclusions game
 - 6 hats form
 - Weighted analysis
 
-### Important
+#### Important
 Wed 6
 - User registration & login
 - Saving decisions & commenting on past decisions
 
-### Other features
+#### Other features
 Thur 7 - Fri 8
 - Follow-ups & patterns
 - Other decision-making tools
 
-### Other things
+#### Other things
 Sat 9 - Monday 11
 - UI
 - Animate the roo
