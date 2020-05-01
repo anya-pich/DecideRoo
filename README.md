@@ -1,6 +1,6 @@
 # DecideRoo
 
-<a href="https://www.youtube.com/embed/Qiw3vVy_eN8"><img src="http://img.youtube.com/vi/Qiw3vVy_eN8/0.jpg" 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Qiw3vVy_eN8" target="_blank"><img src="http://img.youtube.com/vi/Qiw3vVy_eN8/1.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 ## Scope
