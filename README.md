@@ -24,11 +24,15 @@ A simple set of tools to facilitate the decision-making process for indecisive i
 
 ![main page wireframe](readme/problemdefinition.jpeg)
 
-![main page tiles](readme/tiles.png)
-
 ![jump2conclusions wireframe](readme/jump2conclusions.jpeg)
 
 ![six hats wireframe](readme/6hats.png)
+
+![tregoe step 1 wireframe](readme/tregoe1.jpeg)
+
+![tregoe step 2 wireframe](readme/tregoe2.jpeg)
+
+![tregoe step 3 wireframe](readme/tregoe3.jpeg)
 
 ## Data Models
 
@@ -41,7 +45,7 @@ Fri 1 - Tue 5
 - Homepage with defining the decision
 - Jump to conclusions game
 - 6 hats form
-- Weighted analysis
+- Lengthy mathsy analysis
 
 #### Important
 Wed 6
