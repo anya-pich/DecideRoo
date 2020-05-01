@@ -30,7 +30,7 @@ A simple set of tools to facilitate the decision-making process for indecisive i
 
 ![tregoe step 1 wireframe](readme/tregoe1.jpeg)
 
-![tregoe step 2 wireframe](readme/tregoe2.jpeg)
+![tregoe step 2 wireframe](readme/tregoe2.png)
 
 ![tregoe step 3 wireframe](readme/tregoe3.jpeg)
 
