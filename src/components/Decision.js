@@ -3,13 +3,14 @@ import Section from "./Section";
 import Collapsible from "./Collapsible";
 import { Accordion, Card, Form, Row, Col } from "react-bootstrap";
 import CollapseToggle from "./CollapseToggle";
-import Decision from './Decision'
 
-class Landing extends Component {
+class Decision extends Component {
   state = {
-		decisionContent: null,
-		decisionEditable: true,
-
+    decision: null,
+    editable: true,
+    deadline: null,
+    importance: null,
+    indecisiveness: null,
 	};
 
 	handleChange = (event) => {
@@ -21,26 +22,37 @@ class Landing extends Component {
 	handleSubmit = (event) => {
 		event.preventDefault();
 		this.setState({
-
+      editable: false,
 		})
 	}
 
   render() {
     return (
       <main>
-				<Decision />
         <Accordion defaultActiveKey="0">
           <Card>
-            <Card.Header as="h1">Hi, person!</Card.Header>
+            <Card.Header as="h1">What brings you here today?</Card.Header>
             <Card.Body>
-              <Card.Title>What decision do you need to make?</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
-                The drop-down below contains some tools if you could use some
-                help defining your conundrum
-              </Card.Subtitle>
 
               <Form>
-                
+                <Form.Group controlId="decisionContent" onSubmit={this.handleSubmit}>
+                  <Form.Label>
+                    What decision are you trying to make?
+                  </Form.Label>
+                  {this.state.editable ? (
+                    <Form.Control as="textarea" rows="2" placeholder="Decision summary" />
+                  ) : (
+                    <Form.Control
+                      plaintext
+                      readOnly
+                      defaultValue="email@example.com"
+                    />
+                  )}
+
+                  <Form.Text className="text-muted">
+                    Nebulous is fine
+                  </Form.Text>
+                </Form.Group>
               </Form>
 
               <CollapseToggle eventKey="0"></CollapseToggle>
@@ -76,4 +88,4 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+export default Decision;
