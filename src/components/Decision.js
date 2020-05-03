@@ -55,6 +55,34 @@ class Decision extends Component {
                 </Form.Group>
               </Form>
 
+              <Form>
+                <Form.Group controlId="importance" onChange={this.handleChange}>
+                  <Form.Label>Importance:</Form.Label>
+                  <Form.Control type="range" custom min="1" max="7" />
+                  <Form.Text className="text-muted d-flex justify-content-between">
+                    <span>Trivial</span>
+                    <span>Non-lethal</span>
+                    <span>Serious</span>
+                    <span>Life-altering</span>
+                  </Form.Text>
+                </Form.Group>
+              </Form>
+
+              <Form>
+                <Form.Group controlId="indecisiveness" onChange={this.handleChange}>
+                  <Form.Label>Indecisiveness:</Form.Label>
+                  <Form.Control type="range" custom min="1" max="7" />
+                  <Form.Text className="text-muted d-flex justify-content-between">
+                    <span>Clueless</span>
+                    <span>Tentative</span>
+                    <span>Partisan</span>
+                    <span>Resolute</span>
+                  </Form.Text>
+                </Form.Group>
+              </Form>
+
+              
+
               <CollapseToggle eventKey="0"></CollapseToggle>
             </Card.Body>
           </Card>
