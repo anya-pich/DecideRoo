@@ -8,6 +8,7 @@ import Mathsy from "../components/Mathsy";
 import SixHats from "../components/SixHats";
 import JumpTo from "../components/JumpTo";
 import NotFound from "../components/NotFound";
+import Test from "../components/Test";
 
 export default (props) => (
   <Switch>
@@ -16,6 +17,7 @@ export default (props) => (
     <Route path="/jump-to" component={JumpTo} />
     <Route path="/six-hats" component={SixHats} />
     <Route path="/mathsy" component={Mathsy} />
+    <Route path="/test" component={Test} />
     <Route
       path="/login"
       render={(routeProps) => {
