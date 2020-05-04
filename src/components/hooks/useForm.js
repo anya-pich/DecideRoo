@@ -1,10 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-const useForm = (callback, validate) => {
+const useForm = (initialValues, validate, callback) => {
 
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+  const [onBlur, setOnBlur] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const formRendered = useRef(true);
+
+  useEffect(() => {
+    if (!formRendered.current) {
+      setValues(initialValues);
+      setErrors({});
+      setTouched({});
+      setIsSubmitting(false);
+      setOnBlur(false);
+    }
+    formRendered.current = false;
+  }, [initialValues]);
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
@@ -12,10 +27,12 @@ const useForm = (callback, validate) => {
     }
   }, [errors]);
 
-  const handleSubmit = (event) => {
-    if (event) event.preventDefault();
+  const handleBlur = (event) => {
+    const { target } = event;
+    const { name } = target;
+    console.log(name);
+    setTouched(touched => ({ ...touched, [name]: true }));
     setErrors(validate(values));
-    setIsSubmitting(true);
   };
 
   const handleChange = (event) => {
@@ -23,11 +40,19 @@ const useForm = (callback, validate) => {
     setValues(values => ({ ...values, [event.target.name]: event.target.value }));
   };
 
+  const handleSubmit = (event) => {
+    if (event) event.preventDefault();
+    // setErrors(validate(values));
+    setIsSubmitting(true);
+  };
+  
   return {
-    handleChange,
-    handleSubmit,
     values,
     errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
   }
 };
 

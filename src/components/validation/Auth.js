@@ -10,7 +10,13 @@ export default function validate(values) {
   if (!values.password) {
     errors.password = "Password is required";
   } else if (!/^(?=.*\d).{4,20}$/.test(values.password)) {
-    errors.password = "Please use 4-20 characters and include a number";
+    errors.password = "Password must be 4-20 characters long and contain a number";
+  }
+
+  if (!values.password2) {
+    errors.password2 = "Please re-enter your password";
+  } else if (values.password !== values.password2) {
+    errors.password2 = "Passwords must match"
   }
 
   return errors;

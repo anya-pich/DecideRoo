@@ -4,7 +4,6 @@ import Collapsible from "./Collapsible";
 import { Accordion, Card, Form, Row, Col } from "react-bootstrap";
 import CollapseToggle from "./CollapseToggle";
 import DatePicker from "react-datepicker";
-import useInput from "./hooks/useInput";
 import useForm from "./hooks/useForm";
 
 export const Decision = (params) => {

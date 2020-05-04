@@ -3,12 +3,12 @@ import { Switch, Route } from "react-router-dom";
 
 import About from "../components/About";
 import Landing from "../components/Landing";
-import Login from "../components/Login";
 import Mathsy from "../components/Mathsy";
 import SixHats from "../components/SixHats";
 import JumpTo from "../components/JumpTo";
 import NotFound from "../components/NotFound";
 import Test from "../components/Test";
+import Auth from "../components/Auth";
 
 export default (props) => (
   <Switch>
@@ -22,7 +22,19 @@ export default (props) => (
       path="/login"
       render={(routeProps) => {
         return (
-          <Login
+          <Auth
+            {...routeProps}
+            currentUser={props.currentUser}
+            setCurrentUser={props.setCurrentUser}
+          />
+        );
+      }}
+    />
+    <Route
+      path="/signup"
+      render={(routeProps) => {
+        return (
+          <Auth
             {...routeProps}
             currentUser={props.currentUser}
             setCurrentUser={props.setCurrentUser}
