@@ -1,28 +1,49 @@
-import React from "react";
-import { Card, Accordion } from "react-bootstrap";
-import CollapseToggle from './CollapseToggle';
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import React from 'react';
 
-const Collapsible = (props) => {
-  return (
-    <Accordion defaultActiveKey="0">
-      <Card>
-        <Card.Header>
-          <CollapseToggle eventKey="0"></CollapseToggle>
-        </Card.Header>
-        <Accordion.Collapse eventKey="0">
-          <Card.Body>Hello! I'm the body</Card.Body>
-        </Accordion.Collapse>
-      </Card>
-      <Card>
-        <Card.Header>
-          <CollapseToggle eventKey="1"></CollapseToggle>
-        </Card.Header>
-        <Accordion.Collapse eventKey="1">
-          <Card.Body>Hello! I'm another body</Card.Body>
-        </Accordion.Collapse>
-      </Card>
-    </Accordion>
-  );
-};
+
+class Collapsible extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {items: ['hello', 'world', 'click', 'me']};
+    this.handleAdd = this.handleAdd.bind(this);
+  }
+
+  handleAdd() {
+    const newItems = this.state.items.concat([
+      prompt('Enter some text')
+    ]);
+    this.setState({items: newItems});
+  }
+
+  handleRemove(i) {
+    let newItems = this.state.items.slice();
+    newItems.splice(i, 1);
+    this.setState({items: newItems});
+  }
+
+  render() {
+    const items = this.state.items.map((item, i) => (
+      <CSSTransition
+        key={i}
+        classNames="example"
+        timeout={{enter: 500, exit: 300}}
+      >
+        <div key={i} onClick={() => this.handleRemove(i)}>
+          {item}
+        </div>
+      </CSSTransition>
+    ));
+
+    return (
+      <div>
+        <button onClick={this.handleAdd}>Add Item</button>
+        <TransitionGroup>
+          {items}
+        </TransitionGroup>
+      </div>
+    );
+  }
+}
 
 export default Collapsible;

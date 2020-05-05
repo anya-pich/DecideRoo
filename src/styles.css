@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+	padding: 0;
+}
+
+.collapsed-content {
+  max-height: 0px;
+  overflow: hidden;
+  transition-property: max-height;
+  transition-duration: 500ms;
+  transition-timing-function: ease-in;
+  transition-delay: 50ms;
+}
+
+.collapsed-content-show {
+  max-height: 100vh;
+}
+/* .collapsible {
+  max-height: 100vh;
+  transition: max-height 750ms 0ms;
+}
+
+.collapsible.hide {
+  transition: max-height 750ms 0ms;
+  max-height: 0px;
+  overflow: hidden;
+} */
+
+.toggle:checked + .lbl-toggle::before {
+  transform: rotate(90deg) translateX(-3px);
+}
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-exit {
+  opacity: 1;
+}
+
+.example-exit.example-exit-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

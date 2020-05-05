@@ -10,10 +10,10 @@ const Auth = (props) => {
     handleChange,
     handleBlur,
     handleSubmit,
-  } = useForm(null, validate, signup);
+  } = useForm(null, validate, callback);
 
-  function signup() {
-    console.log(values);
+  function callback() {
+		console.log(values);
   }
 
   function valClass(field) {
@@ -22,8 +22,8 @@ const Auth = (props) => {
       : !!touched[field] && !errors[field]
       ? "form-control is-valid"
       : "form-control";
-  }
-
+	}
+	
   return (
     <form noValidate onSubmit={handleSubmit} className="needs-validation">
       <div className="form-group">
@@ -37,9 +37,11 @@ const Auth = (props) => {
           onBlur={handleBlur}
           value={values.email || ""}
         />
-        <small className="text-muted">
-          We'll never share your email with anyone else
-        </small>
+				{props.match.path === "/login" ? null :
+					<small className="text-muted">
+						We'll never share your email with anyone else
+					</small>
+				}
         <div className="invalid-feedback">{errors.email}</div>
       </div>
 
@@ -56,21 +58,22 @@ const Auth = (props) => {
         />
         <div className="invalid-feedback">{errors.password}</div>
       </div>
-
-      <div className="form-group">
-        <label>Re-enter password</label>
-        <input
-          className={valClass("password2")}
-          type="password"
-          placeholder="Re-enter password"
-          name="password2"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.password2 || ""}
-        />
-        <div className="invalid-feedback">{errors.password2}</div>
-      </div>
-
+			
+			{props.match.path === "/login" ? null : 
+				<div className="form-group">
+					<label>Re-enter password</label>
+					<input
+						className={valClass("password2")}
+						type="password"
+						placeholder="Re-enter password"
+						name="password2"
+						onChange={handleChange}
+						onBlur={handleBlur}
+						value={values.password2 || ""}
+					/>
+					<div className="invalid-feedback">{errors.password2}</div>
+				</div>
+			}
       <button type="submit" className="btn btn-primary">
         Submit
       </button>
