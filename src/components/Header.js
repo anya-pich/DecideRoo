@@ -1,5 +1,7 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
 
 const Header = (props) => {
   return (
@@ -13,9 +15,23 @@ const Header = (props) => {
             <Nav.Link href="/jump-to">Jump To</Nav.Link>
             <Nav.Link href="/mathsy">Lengthy Mathsy</Nav.Link>
           </Nav>
-          <Navbar.Text className="ml-auto">
-            Signed in as: <a href="/login">Mark Otto</a>
-          </Navbar.Text>
+          <Nav className="ml-auto">
+          {props.currentUser ? (
+            <>
+              <Nav.Link href="/profile">Profile</Nav.Link>
+              <Nav.Link onClick={props.logout}>Log Out</Nav.Link>
+            </>
+          ) : (
+            <>
+              <Nav.Link href="/login">
+                Log In
+              </Nav.Link>
+              <Nav.Link href="/register">
+                Sign Up
+              </Nav.Link>
+            </>
+          )}
+        </Nav>
         </Navbar.Collapse>
       </Navbar>
     </header>

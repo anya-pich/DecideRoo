@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import useForm from "./hooks/useForm";
-import validate from "./validation/Auth";
-import UserModel from '../models/user';
+import validateSignup from "./validation/signup";
+import validateLogin from "./validation/login";
+import UserModel from "../models/user";
 
 const Auth = (props) => {
+  const path = props.match.path;
+  const validate = path === "/login" ? validateLogin : validateSignup;
+
   const {
     values,
     errors,
@@ -12,8 +16,7 @@ const Auth = (props) => {
     handleBlur,
     handleSubmit,
   } = useForm(null, validate, callback);
-
-  const path = props.match.path;
+  const [resError, setResError] = useState(null);
 
   function callback() {
     console.log(values, path);
@@ -24,21 +27,20 @@ const Auth = (props) => {
         props.history.push("/");
       })
       .catch((err) => {
-        if (err) console.log(err);
-        
-      })
+        if (err) console.log(err.response.data.message);
+        setResError(err.response.data.message);
+      });
   }
 
   function valClass(field) {
-    return !!touched[field] && !!errors[field]
-      ? "form-control is-invalid"
-      : !!touched[field] && !errors[field]
-      ? "form-control is-valid"
+    return resError ? "form-control is-invalid"
+      : !!touched[field] && !!errors[field] ? "form-control is-invalid"
+      : !!touched[field] && !errors[field] ? "form-control is-valid"
       : "form-control";
-	}
-	
+  }
+
   return (
-    <form noValidate onSubmit={ handleSubmit } className="needs-validation">
+    <form noValidate onSubmit={handleSubmit} className="needs-validation">
       <div className="form-group">
         <label>Email address</label>
         <input
@@ -49,13 +51,14 @@ const Auth = (props) => {
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.email || ""}
+          required
         />
-				{path === "/login" ? null :
-					<small className="text-muted">
-						We'll never share your email with anyone else
-					</small>
-				}
-        <div className="invalid-feedback">{errors.email}</div>
+        {path === "/login" ? null : (
+          <small className="text-muted">
+            We'll never share your email with anyone else
+          </small>
+        )}
+        <div className="invalid-feedback">{errors.email || resError}</div>
       </div>
 
       <div className="form-group">
@@ -68,25 +71,27 @@ const Auth = (props) => {
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.password || ""}
+          required
         />
         <div className="invalid-feedback">{errors.password}</div>
       </div>
-			
-			{path === "/login" ? null : 
-				<div className="form-group">
-					<label>Re-enter password</label>
-					<input
-						className={valClass("password2")}
-						type="password"
-						placeholder="Re-enter password"
-						name="password2"
-						onChange={handleChange}
-						onBlur={handleBlur}
-						value={values.password2 || ""}
-					/>
-					<div className="invalid-feedback">{errors.password2}</div>
-				</div>
-			}
+
+      {path === "/login" ? null : (
+        <div className="form-group">
+          <label>Re-enter password</label>
+          <input
+            className={valClass("password2")}
+            type="password"
+            placeholder="Re-enter password"
+            name="password2"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password2 || ""}
+            required={path === "/login" ? false : true}
+          />
+          <div className="invalid-feedback">{errors.password2}</div>
+        </div>
+      )}
       <button type="submit" className="btn btn-primary">
         Submit
       </button>
