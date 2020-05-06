@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer>
       <nav className="navbar fixed-bottom navbar-dark bg-primary">
-        <Link className="nav-item nav-link mx-auto" to="/about">About</Link>
+        <Link className="nav-link mx-auto" to="/about">About</Link>
       </nav>
     </footer>
   );
