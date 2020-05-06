@@ -24,6 +24,8 @@ const useForm = (initialValues, validate, callback) => {
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       callback();
+      console.log('submit call');
+      
     }
   }, [errors]);
 
@@ -42,7 +44,7 @@ const useForm = (initialValues, validate, callback) => {
 
   const handleSubmit = (event) => {
     if (event) event.preventDefault();
-    // setErrors(validate(values));
+    setErrors(validate(values));
     setIsSubmitting(true);
   };
   

@@ -31,7 +31,7 @@ export default (props) => (
       }}
     />
     <Route
-      path="/signup"
+      path="/register"
       render={(routeProps) => {
         return (
           <Auth

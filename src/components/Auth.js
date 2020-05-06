@@ -1,6 +1,7 @@
 import React from "react";
 import useForm from "./hooks/useForm";
 import validate from "./validation/Auth";
+import UserModel from '../models/user';
 
 const Auth = (props) => {
   const {
@@ -12,8 +13,20 @@ const Auth = (props) => {
     handleSubmit,
   } = useForm(null, validate, callback);
 
+  const path = props.match.path;
+
   function callback() {
-		console.log(values);
+    console.log(values, path);
+    UserModel.auth(values, path)
+      .then((res) => {
+        console.log(res.data.data);
+        props.setCurrentUser(res.data.data);
+        props.history.push("/");
+      })
+      .catch((err) => {
+        if (err) console.log(err);
+        
+      })
   }
 
   function valClass(field) {
@@ -25,7 +38,7 @@ const Auth = (props) => {
 	}
 	
   return (
-    <form noValidate onSubmit={handleSubmit} className="needs-validation">
+    <form noValidate onSubmit={ handleSubmit } className="needs-validation">
       <div className="form-group">
         <label>Email address</label>
         <input
@@ -37,7 +50,7 @@ const Auth = (props) => {
           onBlur={handleBlur}
           value={values.email || ""}
         />
-				{props.match.path === "/login" ? null :
+				{path === "/login" ? null :
 					<small className="text-muted">
 						We'll never share your email with anyone else
 					</small>
@@ -59,7 +72,7 @@ const Auth = (props) => {
         <div className="invalid-feedback">{errors.password}</div>
       </div>
 			
-			{props.match.path === "/login" ? null : 
+			{path === "/login" ? null : 
 				<div className="form-group">
 					<label>Re-enter password</label>
 					<input

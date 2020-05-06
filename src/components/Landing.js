@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Accordion from './Accordion';
+// import Decision from './Decision';
 
 const Landing = (props) => {
   
