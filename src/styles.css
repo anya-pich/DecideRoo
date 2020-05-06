@@ -4,46 +4,30 @@
 	padding: 0;
 }
 
-.collapsed-content {
-  max-height: 0px;
+.accordion-icon {
+  line-height: 0pc;
+  color: rgba(0,0,0,.25);
+  background-color: transparent;
+  transition: transform 0.6s ease-in-out;
+  float: right;
+  border: none;
+  outline: none !important;
+}
+
+.accordion-icon:hover,
+.accordion-icon:focus {
+  color: rgba(0,0,0,.35);
+}
+
+.accordion-icon:active {
+  color: rgba(0,0,0,.4);
+}
+
+.rotate {
+  transform: rotate(-180deg);
+}
+
+.accordion-content {
   overflow: hidden;
-  transition-property: max-height;
-  transition-duration: 500ms;
-  transition-timing-function: ease-in;
-  transition-delay: 50ms;
-}
-
-.collapsed-content-show {
-  max-height: 100vh;
-}
-/* .collapsible {
-  max-height: 100vh;
-  transition: max-height 750ms 0ms;
-}
-
-.collapsible.hide {
-  transition: max-height 750ms 0ms;
-  max-height: 0px;
-  overflow: hidden;
-} */
-
-.toggle:checked + .lbl-toggle::before {
-  transform: rotate(90deg) translateX(-3px);
-}
-.example-enter {
-  opacity: 0.01;
-}
-
-.example-enter.example-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.example-exit {
-  opacity: 1;
-}
-
-.example-exit.example-exit-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
+  transition: max-height 0.6s ease;
 }

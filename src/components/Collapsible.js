@@ -1,49 +1,48 @@
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import React from 'react';
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import React, { useState } from "react";
 
+const Collapsible = (props) => {
+  const [show, setShow] = useState(false);
+  const [toggleOpen, setToggleOpen] = useState(false);
 
-class Collapsible extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {items: ['hello', 'world', 'click', 'me']};
-    this.handleAdd = this.handleAdd.bind(this);
-  }
-
-  handleAdd() {
-    const newItems = this.state.items.concat([
-      prompt('Enter some text')
-    ]);
-    this.setState({items: newItems});
-  }
-
-  handleRemove(i) {
-    let newItems = this.state.items.slice();
-    newItems.splice(i, 1);
-    this.setState({items: newItems});
-  }
-
-  render() {
-    const items = this.state.items.map((item, i) => (
-      <CSSTransition
-        key={i}
-        classNames="example"
-        timeout={{enter: 500, exit: 300}}
-      >
-        <div key={i} onClick={() => this.handleRemove(i)}>
-          {item}
+  return (
+    <div>
+      <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">Special title treatment</h5>
+          <p className="card-text">
+            With supporting text below as a natural lead-in to additional
+            content.
+          </p>
+          <button className="btn btn-primary" onClick={() => setShow(!show)}>
+            Toggle
+          </button>
         </div>
-      </CSSTransition>
-    ));
-
-    return (
-      <div>
-        <button onClick={this.handleAdd}>Add Item</button>
-        <TransitionGroup>
-          {items}
-        </TransitionGroup>
+        <CSSTransition
+          in={show}
+          timeout={{enter:500, exit:300}}
+          classNames="accordion"
+          unmountOnExit
+          onEnter={() => setToggleOpen(true)}
+          onExited={() => setToggleOpen(false)}
+        >
+          <div className="card-body">
+            <h5 className="card-title">Special title treatment</h5>
+            <p className="card-text">
+              With supporting text below as a natural lead-in to additional
+              content.
+            </p>
+            <button className="btn btn-primary" onClick={() => setShow(!show)}>
+              Toggle
+            </button>
+          </div>
+        </CSSTransition>
+        <div className="card-footer">
+          <p className="card-text">Footie</p>
+        </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Collapsible;

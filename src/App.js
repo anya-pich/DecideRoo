@@ -29,12 +29,12 @@ class App extends Component {
           currentUser={this.state.currentUser} 
           logout={this.logout}   
         />
-        <main className="container py-3">
+        <div className="container py-3">
           <Routes 
             currentUser={this.state.currentUser} 
             setCurrentUser={this.setCurrentUser} 
           />
-        </main>
+        </div>
         <Footer />
       </>
     )

@@ -1,43 +1,35 @@
-import React, { useState, useRef } from "react";
-import Chevron from "./Chevron";
+import React, { useState, useRef, useEffect } from "react";
+import { FaChevronCircleDown } from "react-icons/fa";
 
-import "./Accordion.css";
+const Accordion = (props) => {
+  const [active, setActive] = useState(false);
+  const contentRef = useRef(null);
 
-function Accordion(props) {
-  const [setActive, setActiveState] = useState("");
-  const [setHeight, setHeightState] = useState("0px");
-  const [setRotate, setRotateState] = useState("accordion__icon");
+  useEffect(() => {
+    contentRef.current.style.maxHeight = active
+      ? `${contentRef.current.scrollHeight}px`
+      : "0px";
+  }, [contentRef, active]);
 
-  const content = useRef(null);
-
-  function toggleAccordion() {
-    setActiveState(setActive === "" ? "active" : "");
-    setHeightState(
-      setActive === "active" ? "0px" : `${content.current.scrollHeight}px`
-    );
-    setRotateState(
-      setActive === "active" ? "accordion__icon" : "accordion__icon rotate"
-    );
-  }
+  const toogleActive = () => {
+    setActive(!active);
+  };
 
   return (
-    <div className="accordion__section">
-      <button className={`accordion ${setActive}`} onClick={toggleAccordion}>
-        <p className="accordion__title">{props.title}</p>
-        <Chevron className={`${setRotate}`} width={10} fill={"#777"} />
-      </button>
-      <div
-        ref={content}
-        style={{ maxHeight: `${setHeight}` }}
-        className="accordion__content"
+    <div className="">
+      <button
+        className={active ? "accordion-icon rotate" : "accordion-icon"}
+        onClick={toogleActive}
       >
-        <div
-          className="accordion__text"
-          dangerouslySetInnerHTML={{ __html: props.content }}
-        />
+        <FaChevronCircleDown />
+      </button>
+      <div ref={contentRef} className="accordion-content">
+        <br /><hr />
+        {props.children}
+        <hr />
       </div>
     </div>
   );
-}
+};
 
 export default Accordion;
