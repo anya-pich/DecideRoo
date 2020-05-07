@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
+import axios from "axios";
 
 const authContext = createContext();
 
@@ -17,52 +18,38 @@ export const useAuth = () => {
 
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
-  const [user, setUser] = useState(null);
-  
-  const signin = (email, password) => {
-    return firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(response => {
-        setUser(response.user);
-        return response.user;
+	const [user, setUser] = useState(localStorage.getItem("uid"));
+	const [resError, setResError] = useState(null);
+
+  const authenticate = (data, path) => {
+    return axios
+      .post(`${process.env.REACT_APP_API_URL}/auth${path}`, data, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        setUser(res.data.data);
+        localStorage.setItem("uid", res.data.data);
+      })
+      .catch((err) => {
+        if (err) console.log(err.response.data.message);
+        setResError(err.response.data.message);
       });
   };
 
-  const signup = (email, password) => {
-    return firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(response => {
-        setUser(response.user);
-        return response.user;
-      });
-  };
-
-  const signout = () => {
-    return firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        setUser(false);
-      });
-  };
-
-  const sendPasswordResetEmail = email => {
-    return firebase
-      .auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        return true;
-      });
-  };
-
-  const confirmPasswordReset = (code, password) => {
-    return firebase
-      .auth()
-      .confirmPasswordReset(code, password)
-      .then(() => {
-        return true;
+  const logout = () => {
+    return axios
+      .delete(`${process.env.REACT_APP_API_URL}/auth/logout`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        localStorage.removeItem("uid");
+        setUser(null);
+        console.log(res);
+      })
+      .catch((err) => {
+				if (err) console.log(err);
+				setResError(err.response.data.message);
       });
   };
 
@@ -71,25 +58,23 @@ function useProvideAuth() {
   // ... component that utilizes this hook to re-render with the ...
   // ... latest auth object.
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+    const unsubscribe = (user) => {
       if (user) {
         setUser(user);
       } else {
         setUser(false);
       }
-    });
+    };
 
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
-  
+
   // Return the user object and auth methods
   return {
-    user,
-    signin,
-    signup,
-    signout,
-    sendPasswordResetEmail,
-    confirmPasswordReset
+		user,
+		resError,
+    authenticate,
+    logout,
   };
 }

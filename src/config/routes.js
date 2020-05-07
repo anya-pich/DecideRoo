@@ -10,41 +10,16 @@ import NotFound from "../components/NotFound";
 import Test from "../components/Test";
 import Auth from "../components/Auth";
 
-export default (props) => (
+export default () => (
   <Switch>
-    <Route
-      exact path="/" 
-      render={(props) => <Landing {...props} randomprop={props.currentUser} />}
-    />
+    <Route exact path="/" component={Landing} />
     <Route exact path="/about" component={About} />
     <Route path="/jump-to" component={JumpTo} />
     <Route path="/six-hats" component={SixHats} />
     <Route path="/mathsy" component={Mathsy} />
     <Route path="/test" component={Test} />
-    <Route
-      path="/login"
-      render={(routeProps) => {
-        return (
-          <Auth
-            {...routeProps}
-            currentUser={props.currentUser}
-            setCurrentUser={props.setCurrentUser}
-          />
-        );
-      }}
-    />
-    <Route
-      path="/register"
-      render={(routeProps) => {
-        return (
-          <Auth
-            {...routeProps}
-            currentUser={props.currentUser}
-            setCurrentUser={props.setCurrentUser}
-          />
-        );
-      }}
-    />
+    <Route path="/login" component={Auth} />
+    <Route path="/register" component={Auth} />
     <Route component={NotFound} />
   </Switch>
 );
