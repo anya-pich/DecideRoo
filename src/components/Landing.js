@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import useForm from "./hooks/useForm";
 import DecisionModel from "../models/decision";
 import Accordion from "./Accordion";
+import Card from "./Card";
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 // import Decision from './Decision';
@@ -16,10 +17,11 @@ const Landing = (props) => {
     handleSubmit,
   } = useForm(null, null, pizza);
   const [resError, setResError] = useState(null);
+  const [step, setStep] = useState(1);
 
   function pizza() {
-    console.log('callback triggered');
-    
+    console.log("callback triggered");
+    setStep(step => step+1);
     console.log(values);
     // DecisionModel.auth(values, path)
     //   .then((res) => {
@@ -33,39 +35,42 @@ const Landing = (props) => {
     //   });
   }
 
+  const step1 = {
+    header: "Step 1: Define your dilemma",
+    title: "What decision are you working on?",
+    text:
+      "With supporting text below as a natural lead-in to additional content.",
+  };
+
+  const step2 = {
+    header: "Step 2: Define your options",
+    title: "What options are you considering?",
+    text:
+      "With supporting text below as a natural lead-in to additional content.",
+  };
+
   return (
     <main>
-      <div className="card">
-        <div className="card-body">
-          <h5 className="card-title">Special title treatment</h5>
-          <p className="card-text">
-            With supporting text below as a natural lead-in to additional
-            content.
-          </p>
-          <hr />
-          <h1 className="card-title">What decision are you working on?</h1>
+      { step === 2 &&
+        <Card {...step2}>
+          <p>form</p>
+        </Card>
+      }
+      <Card {...step1}>
+        <form noValidate onSubmit={handleSubmit} className="">
+          <div className="form-group">
+            <textarea
+              className="form-control"
+              rows="3"
+              placeholder="Summarize your dilemma here"
+              name="title"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.title || ""}
+              required
+            />
+          </div>
           <Accordion title="A">
-            <h5 className="card-title">Collapsed content</h5>
-            <p className="card-text">
-              Sit culpa in nostrud nostrud adipisicing sint incididunt aliqua
-              velit ut. Aliqua commodo sint consectetur cupidatat laborum esse
-              ea in quis exercitation anim enim commodo. Incididunt ea quis amet
-              officia nostrud eiusmod ut nisi et laborum est.
-            </p>
-          </Accordion>
-          <form noValidate onSubmit={handleSubmit} className="">
-            <div className="form-group">
-              <textarea
-                className="form-control"
-                rows="3"
-                placeholder="Summarize your dilemma here"
-                name="title"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.title || ""}
-                required
-              />
-            </div>
             <div className="form-group">
               <label>How important is this decision?</label>
               <input
@@ -114,19 +119,21 @@ const Landing = (props) => {
                 value={values.deadline || ""}
               />
               {/* <DatePicker
-                selected={values.deadline || }
-                onChange={handleChange}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={15}
-                timeCaption="time"
-                dateFormat="MMMM d, yyyy h:mm aa"
-              /> */}
+                  selected={values.deadline || }
+                  onChange={handleChange}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={15}
+                  timeCaption="time"
+                  dateFormat="MMMM d, yyyy h:mm aa"
+                /> */}
             </div>
-            <button type="submit" className="btn btn-primary">Save</button>
-          </form>
-        </div>
-      </div>
+          </Accordion>
+          <button type="submit" className="btn btn-primary">
+            Save
+          </button>
+        </form>
+      </Card>
     </main>
   );
 };
