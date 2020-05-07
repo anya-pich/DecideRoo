@@ -15,8 +15,8 @@ const useForm = (initialValues, validate, callback) => {
       setValues(initialValues);
       setErrors({});
       setTouched({});
-      setIsSubmitting(false);
       setOnBlur(false);
+      setIsSubmitting(false);
     }
     formRendered.current = false;
   }, [initialValues]);
@@ -25,16 +25,15 @@ const useForm = (initialValues, validate, callback) => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       callback();
       console.log('submit call');
-      
     }
-  }, [errors]);
+  }, [errors, isSubmitting, callback]);
 
   const handleBlur = (event) => {
     const { target } = event;
     const { name } = target;
     console.log(name);
     setTouched(touched => ({ ...touched, [name]: true }));
-    setErrors(validate(values));
+    if (validate) setErrors(validate(values));
   };
 
   const handleChange = (event) => {
@@ -43,8 +42,9 @@ const useForm = (initialValues, validate, callback) => {
   };
 
   const handleSubmit = (event) => {
+    console.log('handleSubmit triggered');
     if (event) event.preventDefault();
-    setErrors(validate(values));
+    if (validate) setErrors(validate(values));
     setIsSubmitting(true);
   };
   

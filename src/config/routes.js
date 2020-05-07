@@ -12,7 +12,10 @@ import Auth from "../components/Auth";
 
 export default (props) => (
   <Switch>
-    <Route exact path="/" component={Landing} />
+    <Route
+      exact path="/" 
+      render={(props) => <Landing {...props} randomprop={props.currentUser} />}
+    />
     <Route exact path="/about" component={About} />
     <Route path="/jump-to" component={JumpTo} />
     <Route path="/six-hats" component={SixHats} />
