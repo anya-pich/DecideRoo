@@ -24,6 +24,7 @@ const useForm = (initialValues, validate, callback) => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       callback();
       console.log("submit call");
+      setIsSubmitting(false);
     }
   }, [errors, isSubmitting, callback]);
 

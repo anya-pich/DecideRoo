@@ -6,8 +6,19 @@ import Card from "./Card";
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 // import Decision from './Decision';
+import useLocalStorage from './hooks/useLocalStorage';
 
 const Landing = (props) => {
+  const key = "decision";
+  const [storedValues, setStoredValues] = useState(JSON.parse(localStorage.getItem(key)));
+  useEffect(() => {
+    if (storedValues) {
+      localStorage.setItem(key, JSON.stringify(storedValues))
+    } else {
+      localStorage.removeItem(key);
+    }
+  }, [key, storedValues])
+  
   const {
     values,
     errors,
@@ -15,14 +26,15 @@ const Landing = (props) => {
     handleChange,
     handleBlur,
     handleSubmit,
-  } = useForm(null, null, pizza);
+  } = useForm(null, null, callback);
   const [resError, setResError] = useState(null);
-  const [step, setStep] = useState(1);
+  // const [step, setStep] = useState(1);
 
-  function pizza() {
+
+  function callback() {
     console.log("callback triggered");
-    setStep(step => step+1);
     console.log(values);
+    setStoredValues(values);
     // DecisionModel.auth(values, path)
     //   .then((res) => {
     //     console.log(res.data.data);
@@ -34,6 +46,16 @@ const Landing = (props) => {
     //     setResError(err.response.data.message);
     //   });
   }
+
+  function clear(event) {
+    event.preventDefault();
+    localStorage.removeItem('decision');
+    setStoredValues(null);
+  }
+
+  // const handleStep = (delta) => {
+    // setStep(step => step+1);
+  // }
 
   const step1 = {
     header: "Step 1: Define your dilemma",
@@ -51,11 +73,6 @@ const Landing = (props) => {
 
   return (
     <main>
-      { step === 2 &&
-        <Card {...step2}>
-          <p>form</p>
-        </Card>
-      }
       <Card {...step1}>
         <form noValidate onSubmit={handleSubmit} className="">
           <div className="form-group">
@@ -132,6 +149,7 @@ const Landing = (props) => {
           <button type="submit" className="btn btn-primary">
             Save
           </button>
+          <button onClick={clear} className="btn btn-danger">Clear</button>
         </form>
       </Card>
     </main>
