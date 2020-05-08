@@ -45,7 +45,7 @@ const Auth = (props) => {
           name="email"
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values.email || ""}
+          value={values.email ? values.email : ""}
           required
         />
         {path === "/login" ? null : (
@@ -65,7 +65,7 @@ const Auth = (props) => {
           name="password"
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values.password || ""}
+          value={values.password ? values.password : ""}
           required
         />
         <div className="invalid-feedback">{errors.password || auth.resError}</div>
@@ -81,7 +81,7 @@ const Auth = (props) => {
             name="password2"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.password2 || ""}
+            value={values.password2 ? values.password : ""}
             required={path === "/login" ? false : true}
           />
           <div className="invalid-feedback">{errors.password2}</div>
