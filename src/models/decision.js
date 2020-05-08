@@ -10,8 +10,8 @@ export default class DecisionModel {
     return axios.get(`${process.env.REACT_APP_API_URL}/decisions/${id}`);
   }
 
-  static update(data) {
-    return axios.put(`${process.env.REACT_APP_API_URL}/decisions/${data._id}`, data);
+  static update(data, id) {
+    return axios.put(`${process.env.REACT_APP_API_URL}/decisions/${id}`, data);
   }
 
   static delete(id) {

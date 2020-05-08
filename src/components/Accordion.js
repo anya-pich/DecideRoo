@@ -11,7 +11,8 @@ const Accordion = (props) => {
       : "0px";
   }, [contentRef, active]);
 
-  const toogleActive = () => {
+  const toogleActive = (e) => {
+    e.preventDefault();
     setActive(!active);
   };
 

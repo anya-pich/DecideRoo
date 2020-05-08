@@ -7,22 +7,22 @@ const useForm = (initialValues, validate, callback) => {
   const [onBlur, setOnBlur] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const formRendered = useRef(true);
+  const pizza = useRef(true);
 
   useEffect(() => {
-    if (!formRendered.current) {
+    if (pizza.current) {
       setValues(initialValues);
       setErrors({});
       setTouched({});
       setOnBlur(false);
       setIsSubmitting(false);
     }
-    formRendered.current = false;
+    pizza.current = false;
   }, [initialValues]);
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
-      callback();
+      callback(values);
       console.log("submit call");
       setIsSubmitting(false);
     }

@@ -10,6 +10,7 @@ import NotFound from "../components/NotFound";
 import Test from "../components/Test";
 import Auth from "../components/Auth";
 import DecisionShow from "../components/DecisionShow";
+import Profile from "../components/Profile";
 
 
 export default () => (
@@ -22,6 +23,7 @@ export default () => (
     <Route path="/test" component={Test} />
     <Route path="/login" component={Auth} />
     <Route path="/register" component={Auth} />
+    <Route path="/profile" component={Profile} />
     <Route exact path="/about" component={About} />
     <Route component={NotFound} />
   </Switch>
