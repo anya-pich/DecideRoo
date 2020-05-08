@@ -1,3 +1,7 @@
 {
-	"workbench.editor.openSideBySideDirection": "down"
+	"workbench.editor.openSideBySideDirection": "down",
+	"editor.snippetSuggestions": "top",
+	"emmet.includeLanguages": {
+		"javascript": "javascriptreact"
+	},
 }

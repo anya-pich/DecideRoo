@@ -15,6 +15,7 @@ const SixHats = (props) => {
 
 	return (
 		<>
+      <h3>{storeThis}</h3>
 			<button onClick={handleClick} className="btn btn-danger">Big Red Button</button>
 			<button onClick={handleClickDelete} className="btn btn-primary">Big Blue Button</button>
 		</>
