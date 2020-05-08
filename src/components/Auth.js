@@ -81,7 +81,7 @@ const Auth = (props) => {
             name="password2"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.password2 ? values.password : ""}
+            value={values.password2 ? values.password2 : ""}
             required={path === "/login" ? false : true}
           />
           <div className="invalid-feedback">{errors.password2}</div>
