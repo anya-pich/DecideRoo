@@ -10,7 +10,7 @@ const useForm = (initialValues, validate, callback) => {
   const pizza = useRef(true);
 
   useEffect(() => {
-    if (pizza.current) {
+    if (!pizza.current) {
       setValues(initialValues);
       setErrors({});
       setTouched({});
