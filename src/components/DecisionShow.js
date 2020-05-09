@@ -1,16 +1,13 @@
 import React, {
   useState,
-  useContext,
   useEffect,
-  useCallback,
-  useMemo,
 } from "react";
 import DecisionModel from "../models/decision";
 import Card from "./Card";
 import Button from "./Button";
 import InlineEdit from "./InlineEdit";
 import ConfirmDelete from "./ConfirmDelete";
-import DecisionEdit from './DecisionEdit';
+import DecisionEdit from "./DecisionEdit";
 
 const DecisionShow = (props) => {
   const [resError, setResError] = useState(null);
@@ -45,38 +42,42 @@ const DecisionShow = (props) => {
   };
 
   const handleUpdate = (data) => {
-		console.log("eddy-ting!");
-		DecisionModel.update(data, props.match.params.id)
-			.then((res) => {
-				console.log(res.data);
-				setEditing(editing => !editing);
-				setDecisionObject(res.data);
-			})
-			.catch((err) => console.log(err));
-	};
-	
-	const handleCancel = (e) => {
-		e.preventDefault();
-		console.log('handling cancel');
-		setEditing(!editing);
-	}
+    console.log("eddy-ting!");
+    DecisionModel.update(data, props.match.params.id)
+      .then((res) => {
+        console.log(res.data);
+        setEditing((editing) => !editing);
+        setDecisionObject(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    console.log("handling cancel");
+    setEditing(!editing);
+  };
 
   return (
-		<>
-			{editing ? 
-				<Card header={"Edit decision definition"} >
-					<DecisionEdit callback={handleUpdate} initialValues={decisionObject} cancel={handleCancel}/>
-				</Card>
-			:
-				<Card header={"Decision definition"} {...decisionObject}>
-					{/* <InlineEdit text={inputValue} onSetText={setInputValue} /> */}
+    <>
+      {editing ? (
+        <Card header={"Edit decision definition"}>
+          <DecisionEdit
+            callback={handleUpdate}
+            initialValues={decisionObject}
+            cancel={handleCancel}
+          />
+        </Card>
+      ) : (
+        <Card header={"Decision definition"} {...decisionObject}>
+          {/* <InlineEdit text={inputValue} onSetText={setInputValue} /> */}
 
-					<Button callback={() => setEditing(!editing)}>Edit</Button>
-					{/* <Button>Print</Button> */}
-					<ConfirmDelete delete={deleteDecision} />
-				</Card>
-			}
-		</>
+          <Button callback={() => setEditing(!editing)}>Edit</Button>
+          {/* <Button>Print</Button> */}
+          <ConfirmDelete delete={deleteDecision} />
+        </Card>
+      )}
+    </>
   );
 };
 

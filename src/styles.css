@@ -1,8 +1,14 @@
 * {
   box-sizing: border-box;
   margin: 0;
-	padding: 0;
+  padding: 0;
 }
+
+body {
+  background-color: #05243D;
+
+}
+
 
 .accordion-icon {
   line-height: 0pc;
@@ -53,3 +59,9 @@
   border-bottom: 1px solid #666666;
   text-align: left;
 }
+
+/* 
+  font-family: 'Kranky', cursive;
+  font-family: 'Pacifico', cursive;
+  font-family: 'Open Sans', sans-serif;
+*/

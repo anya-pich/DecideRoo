@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useState, useContext, useEffect, useCallback, useMemo } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
 

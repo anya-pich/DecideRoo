@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import {useAuth} from "../hooks/useAuth";
 import DecisionModel from "../../models/decision";
-import { Link } from 'react-router-dom';
+import DilemmaMini from "../DilemmaMini";
+import Container from "../Container";
 
 const ShowAll = (props) => {
 
@@ -39,16 +41,10 @@ const ShowAll = (props) => {
 
 
 	return (
-		<>
+		<Container>
 			<h1>Okay</h1>
-			{dilemmas.map(each => (
-				<div>
-					<h1>{each.title}</h1>
-					<p></p>
-					<a href={"/dilemmas/" + each._id}>View</a>
-				</div>
-			))}
-		</>
+			{dilemmas.map(each => <DilemmaMini key={each._id} {...each}/>)}
+		</Container>
 	)
 }
 
