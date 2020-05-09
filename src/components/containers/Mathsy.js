@@ -1,6 +1,10 @@
-import React, { useState, useContext, useEffect, useCallback, useMemo } from 'react';
+import React from 'react';
 
 const Mathsy = (props) => {
+	const [editing, setEditing] = React.useState(false);
+
+	
+
 	return (
 		<>
 			<h1>Mathsy</h1>
