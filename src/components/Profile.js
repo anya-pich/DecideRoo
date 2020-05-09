@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect, useCallback, useMemo } from 're
 import useLocalStorage from './hooks/useLocalStorage';
 import {useAuth} from "./hooks/useAuth";
 import DecisionModel from "../models/decision.js";
+import Card from './Card';
 
 const Profile = (props) => {
 	const [resDecisions, setResDecisions] = useState(null);
@@ -13,15 +14,14 @@ const Profile = (props) => {
 			console.log(auth.user);
 			DecisionModel.getByAuthor(auth.user)
 				.then((res) => {
-					console.log(res);
-					setResDecisions(res.data);
+					console.log(res.data);
+					// setResDecisions(res.data);
 				})
 				.catch((err) => {
 					console.log(err);
 				})
 		}
-	}, [auth])
-
+	}, [auth.user, resDecisions])
 
 	const [storeThis, setStoreThis] = useLocalStorage('hi', 'there');
 
@@ -36,6 +36,9 @@ const Profile = (props) => {
 
 	return (
 		<>
+			{/* {resDecisions.map((obj) => (
+				<Card title={obj.title} key={obj._id}></Card>
+			))} */}
 			<button onClick={handleClick} className="btn btn-danger">Big Red Button</button>
 			<button onClick={handleClickDelete} className="btn btn-primary">Big Blue Button</button>
 		</>
