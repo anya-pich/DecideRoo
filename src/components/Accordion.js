@@ -17,17 +17,19 @@ const Accordion = (props) => {
   };
 
   return (
-    <div className="">
-      <button
-        className={active ? "accordion-icon rotate" : "accordion-icon"}
-        onClick={toogleActive}
-      >
-        <FaChevronCircleDown />
-      </button>
+    <div>
+      <div className="mt-3">
+        <button
+          className={active ? "accordion-icon rotate align-middle" : "accordion-icon align-middle"}
+          onClick={toogleActive}
+        >
+          <FaChevronCircleDown />
+        </button>
+        <span className="text-muted mx-3 align-middle">More info</span>
+      </div>
       <div ref={contentRef} className="accordion-content">
         <br /><hr />
         {props.children}
-        <hr />
       </div>
     </div>
   );

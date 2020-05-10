@@ -7,9 +7,9 @@ export default function Button(props) {
     console.log("this button isn't hooked up to anything");
   }
   return (
-    <button className={props.color ? "btn mr-1 btn-" + props.color
-    : "btn mr-1 btn-primary"} type="submit" onClick={handleClick}>
-      {props.children || "Yaaas"}
+    <button className={props.color ? "btn mx-1 float-right btn-" + props.color
+    : "btn mx-1 btn-dark float-right"} type="submit" onClick={handleClick}>
+      {props.children || "Next"}
     </button>
   );
 }
