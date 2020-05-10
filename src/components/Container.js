@@ -5,8 +5,8 @@ const Container = (props) => {
   const Div = styled.section`
     max-width: 550px;
     top: 100px;
-		padding: 25px;
-		background: rgba(196, 196, 196, 0.1);
+		padding: 25px 10px;
+		background: rgba(0,0,0,0.3);
 		border-radius: 5px;
 		margin: auto;
 		display: flex;
