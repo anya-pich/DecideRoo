@@ -17,7 +17,7 @@ import Profile from "../components/pages/Profile";
 
 export default () => (
   <Switch>
-    <Route exact path="/" component={Landing} />
+    <Route exact path="/" component={NewOne} />
     <Route path="/new" component={NewOne} />
     <Route exact path="/dilemmas/:id/jump-to-conclusions" component={JumpTo} />
     <Route exact path="/dilemmas/:id/six-hats" component={SixHats} />

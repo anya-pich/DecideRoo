@@ -62,7 +62,7 @@ const Random = (props) => {
             />
             <div className="input-group-append" id="button-addon4">
               <button
-                className="btn btn-outline-secondary"
+                className="btn btn-outline-dark"
                 onClick={handleSubmit}
                 type="button"
               >

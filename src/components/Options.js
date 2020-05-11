@@ -10,7 +10,7 @@ const Options = (props) => {
   const [dilemmaId, setDilemmaId] = useState(props.match.params.id || null);
   const [data, setData] = useState([{}]);
   const [update, setUpdate] = useState(1);
-
+  
   // fetch options on load and update
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +20,7 @@ const Options = (props) => {
       setData(response.data);
       console.log(response.data);
     };
-    fetchData();
+    if (dilemmaId) fetchData();
     console.log(update);
   }, [dilemmaId, update]);
 

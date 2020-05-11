@@ -7,19 +7,28 @@ import ToolLinks from "../ToolLinks";
 
 const NewOne = (props) => {
   const [step, setStep] = useState(0);
-  const nextStep = (num) => setStep(num);
+  const nextStep = () => setStep(step => step+1);
 
   const [decisionId, setDecisionId] = useState(null);
   const saveDecisionId = (id) => setDecisionId(id);
 
   return (
     <main className="mb-5">
-      {step >= 3 && <ToolLinks nextStep={nextStep} decisionId={decisionId} />}
-      {step >= 2 && <Options nextStep={nextStep} decisionId={decisionId} />}
+      {step >= 3 && (
+        <ToolLinks {...props} nextStep={nextStep} decisionId={decisionId} />
+      )}
+      {step >= 2 && (
+        <Options {...props} nextStep={nextStep} decisionId={decisionId} />
+      )}
       {step >= 1 && (
-        <Dilemma nextStep={nextStep} saveDecisionId={saveDecisionId} />
+        <Dilemma
+          {...props}
+          nextStep={nextStep}
+          saveDecisionId={saveDecisionId}
+        />
       )}
       <Info
+        {...props}
         title={"Decisions can be hard!"}
         body={
           "That's why we've put together a few tools and resources to help you work through your dilemmas. Read more below or dive right in."

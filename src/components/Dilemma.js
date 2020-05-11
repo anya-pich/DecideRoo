@@ -66,7 +66,9 @@ const Dilemma = (props) => {
       .then((res) => {
         setData(res.data);
         console.log(res.data);
-        props.saveDecisionId(res.data._id);
+        if (props.saveDecisionId) {
+          props.saveDecisionId(res.data._id);
+        }
         setIsEditing(false);
       })
       .catch((err) => console.log(err));
@@ -133,17 +135,21 @@ const Dilemma = (props) => {
               />
             </div>
 
-            <label>Decision:</label>
-            <div className="input-group">
-              <select className="custom-select" name="chosenOption">
-                <option defaultValue>Choose...</option>
-                {options.map((each) => (
-                  <option value={each._id} key={each._id}>
-                    {each.title}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {options.length ? 
+              <>
+                <label>Decision:</label>
+                <div className="input-group">
+                  <select className="custom-select" name="chosenOption">
+                    <option defaultValue>Choose...</option>
+                    {options.map((each) => (
+                      <option value={each._id} key={each._id}>
+                        {each.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </>
+            : null }
 
             <Accordion>
               <div className="form-group">
