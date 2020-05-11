@@ -17,7 +17,7 @@ export const useAuth = () => {
 };
 
 // Provider hook that creates auth object and handles state
-function useProvideAuth() {
+function useProvideAuth(props) {
 	const [user, setUser] = useState(localStorage.getItem("uid"));
 	const [resError, setResError] = useState(null);
 
@@ -46,6 +46,7 @@ function useProvideAuth() {
         localStorage.removeItem("uid");
         setUser(null);
         console.log(res);
+        props.history.push("/");
       })
       .catch((err) => {
 				if (err) console.log(err);
