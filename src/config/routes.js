@@ -1,20 +1,19 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import JumpTo from "../components/containers/JumpTo";
-import Mathsy from "../components/containers/Mathsy";
-import NotFound from "../components/containers/NotFound";
-import ShowAll from "../components/containers/ShowAll";
-import ShowOne from "../components/containers/ShowOne";
-import SixHats from "../components/containers/SixHats";
-import Landing from "../components/containers/Landing";
-import NewOne from "../components/containers/NewOne";
+import JumpTo from "../components/pages/JumpTo";
+import Mathsy from "../components/pages/Mathsy";
+import NotFound from "../components/pages/NotFound";
+import ShowOne from "../components/pages/ShowOne";
+import SixHats from "../components/pages/SixHats";
+import Landing from "../components/pages/Landing";
+import NewOne from "../components/pages/NewOne";
 
-import About from "../components/About";
+import About from "../components/pages/About";
 import Test from "../components/Test";
 import Auth from "../components/Auth";
 import DecisionShow from "../components/DecisionShow";
-import Profile from "../components/Profile";
+import Profile from "../components/pages/Profile";
 
 export default () => (
   <Switch>
@@ -23,8 +22,7 @@ export default () => (
     <Route exact path="/dilemmas/:id/jump-to-conclusions" component={JumpTo} />
     <Route exact path="/dilemmas/:id/six-hats" component={SixHats} />
     <Route exact path="/dilemmas/:id/methodical-method" component={Mathsy} />
-    <Route path="/dilemmas/:id" component={DecisionShow} />
-    <Route path="/show-all" component={ShowAll} />
+    <Route exact path="/dilemmas/:id" component={ShowOne} />
     <Route path="/show-one" component={ShowOne} />
     <Route path="/jump-to" component={JumpTo} />
     <Route path="/six-hats" component={SixHats} />

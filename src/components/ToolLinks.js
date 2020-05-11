@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState} from 'react';
 
 import Card from "./Card";
-import Button from "./Button";
 
 const ToolLinks = (props) => {
+  const [dilemmaId, setDilemmaId] = useState(props.decisionId || props.match.params.id);
+
   return (
     <Card
       title="Pick a tool to get started"
@@ -23,7 +24,7 @@ const ToolLinks = (props) => {
               an algorithm pick one of your options at random. You'll be able to make notes and roll the dice again as many times as you want.
             </p>
             <a
-              href={"/dilemmas/" + props.decisionId + "/jump-to-conclusions"}
+              href={"/dilemmas/" + dilemmaId+ "/jump-to-conclusions"}
               className="text-muted stretched-link"
             >
               Let's do this
@@ -47,7 +48,7 @@ const ToolLinks = (props) => {
               facts to go off of, or if you're feeling stuck.
             </p>
             <a
-              href={"/dilemmas/" + props.decisionId + "/six-hats"}
+              href={"/dilemmas/" + dilemmaId+ "/six-hats"}
               className="text-muted stretched-link"
             >
               Let's go
@@ -71,7 +72,7 @@ const ToolLinks = (props) => {
               that also offers contingency planning.
             </p>
             <a
-              href={"/dilemmas/" + props.decisionId + "/methodical-method"}
+              href={"/dilemmas/" + dilemmaId+ "/methodical-method"}
               className="text-muted stretched-link"
             >
               Take me there

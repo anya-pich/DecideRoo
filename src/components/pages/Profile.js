@@ -5,30 +5,41 @@ import DecisionModel from "../../models/decision";
 import DilemmaMini from "../DilemmaMini";
 import Container from "../Container";
 
-const ShowAll = (props) => {
-  const [dilemmas, setDilemmas] = useState([]);
+const Profile = (props) => {
+	const [dilemmas, setDilemmas] = useState([]);
+  const [update, setUpdate] = useState(1);
 
   // get auth state & re-render anytime it changes
   const auth = useAuth();
-  // auth.user had the logged in user id
 
   // get dilemmas from local storage
   const [localStorDilemmas, setLocalStorDilemmas] = useState(
     localStorage.getItem("dilemmas") || ""
   );
 
-  // get dilemmas from back end on initial render
+  // get dilemmas from back end on initial render & when dilemmas changes
   useEffect(() => {
     const fetchData = async () => {
       const response = await DecisionModel.getByAuthor(auth.user);
       setDilemmas(response.data);
     };
     fetchData();
-  }, [auth.user]);
+	}, [auth.user, update]);
 
   // initial setup done
   console.log(dilemmas);
-  console.log(localStorDilemmas);
+	console.log(localStorDilemmas);
+	
+	// delete post callback
+	const handleDelete = (event, id) => {
+		event.preventDefault();
+		DecisionModel.delete(id)
+			.then(res => {
+				console.log(res.data);
+				setUpdate(update => update+1);
+			})
+			.catch(err => console.log(err))
+	}
 
   return (
     <Container>
@@ -41,30 +52,10 @@ const ShowAll = (props) => {
       </a>
       <hr />
       {dilemmas.map((each) => (
-        <DilemmaMini key={each._id} {...each} />
+        <DilemmaMini key={each._id} {...each} handleDelete={handleDelete} />
       ))}
     </Container>
   );
 };
 
-export default ShowAll;
-
-// function Form() {
-//   // 1. Use the name state variable
-//   const [name, setName] = useState('Mary');
-
-//   // 2. Use an effect for persisting the form
-//   useEffect(function persistForm() {
-//     localStorage.setItem('formData', name);
-//   });
-
-//   // 3. Use the surname state variable
-//   const [surname, setSurname] = useState('Poppins');
-
-//   // 4. Use an effect for updating the title
-//   useEffect(function updateTitle() {
-//     document.title = name + ' ' + surname;
-//   });
-
-//   // ...
-// }
+export default Profile;

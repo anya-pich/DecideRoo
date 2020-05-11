@@ -4,7 +4,7 @@ import axios from "axios";
 import useForm from "./hooks/useForm";
 
 const Option = (props) => {
-  const [isEditing, setIsEditing] = useState(true);
+  const [isEditing, setIsEditing] = useState(props.setEdit);
   const [apiRes, setApiRes] = useState({});
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Option = (props) => {
     handleChange,
     handleBlur,
     handleSubmit,
-  } = useForm(null, null, onSubmit);
+  } = useForm(props, null, onSubmit);
 
   // save to API
   const saveOption = () => {
@@ -70,7 +70,7 @@ const Option = (props) => {
   };
 
   return (
-    <div className="input-group my-2" key={props._id || ""}>
+    <div className="input-group my-2">
       {isEditing ? (
         <input
           className="form-control"
