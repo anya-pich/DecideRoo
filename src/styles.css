@@ -1,7 +1,11 @@
 * {
   box-sizing: border-box;
   margin: 0;
-	padding: 0;
+  padding: 0;
+}
+
+body {
+  background: slategray;
 }
 
 .accordion-icon {
@@ -9,7 +13,7 @@
   color: rgba(0,0,0,.25);
   background-color: transparent;
   transition: transform 0.6s ease-in-out;
-  float: right;
+  /* float: right; */
   border: none;
   outline: none !important;
 }
@@ -53,3 +57,9 @@
   border-bottom: 1px solid #666666;
   text-align: left;
 }
+
+/* 
+  font-family: 'Kranky', cursive;
+  font-family: 'Pacifico', cursive;
+  font-family: 'Open Sans', sans-serif;
+*/

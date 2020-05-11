@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Decision from './Decision';
+import Dilemma from '../Dilemma';
 
 const Landing = (props) => {
   
@@ -14,7 +14,7 @@ const Landing = (props) => {
 
   return (
     <main>
-      <Decision {...props} />
+      <Dilemma {...props} />
     </main>
   );
 };

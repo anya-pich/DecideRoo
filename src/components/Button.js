@@ -1,15 +1,19 @@
 import React from "react";
 
 export default function Button(props) {
-  function handleClick(e) {
-    e.preventDefault();
-    return props.callback ? props.callback() :
-    console.log("this button isn't hooked up to anything");
+  const handleClick = (e) => {
+    if (props.callback) {
+      e.preventDefault();
+      props.callback();
+      console.log("button component callback fired");
+    } else {
+      console.log("button component presumably submitting");
+    }
   }
   return (
-    <button className={props.color ? "btn mr-1 btn-" + props.color
-    : "btn mr-1 btn-primary"} type="submit" onClick={handleClick}>
-      {props.children || "Yaaas"}
+    <button className={props.color ? "btn ml-1 float-right btn-" + props.color
+    : "btn ml-1 btn-dark float-right"} type="submit" onClick={handleClick}>
+      {props.children || "Next"}
     </button>
   );
 }

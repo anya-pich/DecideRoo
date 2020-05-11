@@ -9,7 +9,7 @@ const Header = (props) => {
   return (
     <header>
       <Navbar
-        bg="primary"
+        bg="dark"
         variant="dark"
         expand="md"
         className="justify-content-between"
