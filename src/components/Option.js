@@ -1,58 +1,49 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import useForm from "./hooks/useForm";
-
 const Option = (props) => {
-  const [isEditing, setIsEditing] = useState(props.setEdit);
-  const [apiRes, setApiRes] = useState({});
+  // const [dilemmaId, setDilemmaId] = useState(props.dilemmaId);
+  const [data, setData] = useState(props.title ? {_id: props._id, title: props.title} : {});
+  const [isEditing, setIsEditing] = useState(data._id ? false : true);
+  const [values, setValues] = useState(data ? data : {});
 
-  useEffect(() => {
-    props.update();
-  }, [apiRes]);
-
-  const onSubmit = () => {
-    if (!isEditing) {
-      setIsEditing(true);
-    } else if (Object.keys(apiRes).length === 0) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (Object.keys(data).length === 0) {
+      setValues({});
       saveOption();
     } else {
+      setIsEditing(false);
       updateOption();
     }
   };
 
-  // form handling
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-  } = useForm(props, null, onSubmit);
-
+  const handleChange = (e) => {
+    e.persist();
+    setValues((values) => ({
+      ...values,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  
   // save to API
   const saveOption = () => {
-    const data = { ...values, decision: props.decisionId };
+    const dataObj = { ...values, decision: props.dilemmaId };
     axios
-      .post(`${process.env.REACT_APP_API_URL}/options`, data)
+      .post(`${process.env.REACT_APP_API_URL}/options`, dataObj)
       .then((res) => {
-        setApiRes(res.data);
-        console.log(res.data);
-        setIsEditing(false);
+        props.update();
       })
       .catch((err) => console.log(err));
   };
 
   // update to API
   const updateOption = () => {
-    const data = { ...values, decision: props.decisionId };
+    const dataObj = { ...values, decision: props.dilemmaId };
     axios
-      .put(`${process.env.REACT_APP_API_URL}/options/${apiRes._id}`, data)
+      .put(`${process.env.REACT_APP_API_URL}/options/${props._id}`, dataObj)
       .then((res) => {
-        setApiRes(res.data);
-        console.log(res.data);
-        setIsEditing(false);
+        props.update();
       })
       .catch((err) => console.log(err));
   };
@@ -61,27 +52,30 @@ const Option = (props) => {
   const handleDelete = (event) => {
     event.preventDefault();
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/options/${apiRes._id}`)
+      .delete(`${process.env.REACT_APP_API_URL}/options/${props._id}`)
       .then((res) => {
-        setApiRes(res.data);
-        console.log(res.data);
+        props.update();
       })
       .catch((err) => console.log(err));
   };
 
+  // toggle edit
+  const toggleEdit = () => {
+    setIsEditing(true);
+  }
+
   return (
     <div className="input-group my-2">
-      {isEditing ? (
+      {isEditing ?
         <input
           className="form-control"
           type="text"
           name="title"
-          placeholder="Potential course of action"
+          placeholder="Add new option"
           onChange={handleChange}
-          onBlur={handleBlur}
           value={values.title || ""}
         />
-      ) : (
+      :
         <input
           className="form-control"
           type="text"
@@ -89,9 +83,9 @@ const Option = (props) => {
           value={values.title || ""}
           readOnly
         />
-      )}
+      }
       <div className="input-group-append" id="button-addon4">
-        {apiRes._id && (
+        {props._id && (
           <button
             onClick={handleDelete}
             className="btn btn-outline-secondary"
@@ -102,8 +96,7 @@ const Option = (props) => {
         )}
         <button
           className="btn btn-outline-dark"
-          type="submit"
-          onClick={handleSubmit}
+          onClick={isEditing ? handleSubmit : toggleEdit}
         >
           {isEditing ? "Save" : "Edit"}
         </button>

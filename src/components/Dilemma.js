@@ -12,21 +12,21 @@ const Dilemma = (props) => {
   const auth = useAuth();
   const [dilemmaId, setDilemmaId] = useState(props.match.params.id || null);
   const [data, setData] = useState({});
-  const [isEditing, setIsEditing] = useState(true);
+  const [isEditing, setIsEditing] = useState(dilemmaId ? false : true);
   const [options, setOptions] = useState([]);
+  const [update, setUpdate] = useState(1);
 
   const onSubmit = () => {
-    if (!isEditing) {
-      setIsEditing(true);
-    } else if (Object.keys(data).length === 0) {
+    setUpdate((update) => update + 1);
+    if (Object.keys(data).length === 0) {
       auth.user ? saveDilemma() : localStoreDilemma();
-      if (props.nextStep) props.nextStep(2);
+      if (props.nextStep) props.nextStep();
     } else {
       updateDilemma();
     }
   };
 
-  // get object info if there's an id
+  // get object info if there's an id and on change
   useEffect(() => {
     const fetchData = async () => {
       const response = await DecisionModel.getOne(dilemmaId);
@@ -35,8 +35,8 @@ const Dilemma = (props) => {
       console.log(response.data);
     };
     if (dilemmaId) fetchData();
-  }, [dilemmaId]);
-  
+  }, [dilemmaId, update]);
+
   // get all options from api by object
   useEffect(() => {
     const fetchData = async () => {
@@ -97,30 +97,30 @@ const Dilemma = (props) => {
     DecisionModel.delete(data._id)
       .then((res) => {
         console.log(res.data);
-        if (props.nextStep) {
-          props.nextStep(0);
-        } else {
-          props.history.push("/");
-        }
+        props.history.push("/");
       })
       .catch((err) => console.log(err));
   }
 
+  // go to editing mode
+  const editForm = () => {
+    setIsEditing(true);
+  };
+  
+  // go to next step
+  const nextStep = (e) => {
+    e.preventDefault();
+    props.nextStep();
+  };
+  
+
   return (
     <>
-      {/* { isEditing ?
+      {isEditing ? (
         <Card title="What do you need to decide?">
-
-        </Card>
-        :
-        <Card title={data.title}>
-
-        </Card>
-      } */}
-      <Card key="dilemma" title={ isEditing ? "What do you need to decide?" : "The Dilemma:"} >
-        <form noValidate onSubmit={handleSubmit} className="">
-          <div className="form-group">
-            {isEditing ? (
+          <form noValidate onSubmit={handleSubmit}>
+            <label>Dilemma:</label>
+            <div className="form-group">
               <textarea
                 className="form-control"
                 rows="3"
@@ -131,70 +131,61 @@ const Dilemma = (props) => {
                 value={values.title || ""}
                 required
               />
-            ) : (
-              <input
-                type="text"
-                className="form-control-plaintext"
-                name="title"
-                value={values.title || ""}
-                readOnly
-              />
-            )}
-          </div>
-          { options.length < 2 ? null :
-            <>
-              <label>The Decision:</label>
-              <div className="input-group">
-                <select className="custom-select" name="chosenOption">
-                  <option defaultValue>Choose...</option>
-                  {options.map(each => <option value={each._id} key={each._id}>{each.title}</option>)}
-                </select>
-                {/* <div className="input-group-append">
-                  <button className="btn btn-outline-secondary" type="button">Set</button>
-                </div> */}
+            </div>
+
+            <label>Decision:</label>
+            <div className="input-group">
+              <select className="custom-select" name="chosenOption">
+                <option defaultValue>Choose...</option>
+                {options.map((each) => (
+                  <option value={each._id} key={each._id}>
+                    {each.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <Accordion>
+              <div className="form-group">
+                <label>How important is this decision?</label>
+                <input
+                  className="custom-range"
+                  type="range"
+                  min="1"
+                  max="5"
+                  name="importance"
+                  onInput={handleChange}
+                  onBlur={handleBlur}
+                  defaultValue={values.importance || ""}
+                />
+                <small className="text-muted d-flex justify-content-between">
+                  <span>Fairly trivial</span>
+                  <span>Serious</span>
+                  <span>Life-changing</span>
+                </small>
               </div>
-            </>
-          }
-          <Accordion title="A">
-            <div className="form-group">
-              <label>How important is this decision?</label>
-              <input
-                className="custom-range"
-                type="range"
-                min="1"
-                max="5"
-                name="importance"
-                onInput={handleChange}
-                onBlur={handleBlur}
-                defaultValue={values.importance || ""}
-              />
-              <small className="text-muted d-flex justify-content-between">
-                <span>Fairly trivial</span>
-                <span>Serious</span>
-                <span>Life-changing</span>
-              </small>
-            </div>
-            <div className="form-group">
-              <label>Indecisiveness level:</label>
-              <input
-                className="custom-range"
-                type="range"
-                min="1"
-                max="5"
-                name="indecisiveness"
-                onInput={handleChange}
-                onBlur={handleBlur}
-                defaultValue={values.indecisiveness || ""}
-              />
-              <small className="text-muted d-flex justify-content-between">
-                <span>Lost</span>
-                <span>Considering alternatives</span>
-                <span>Resolved</span>
-              </small>
-            </div>
-            <div className="form-group">
-              <label>Deadline:</label>
-              {isEditing ? (
+
+              <div className="form-group">
+                <label>Indecisiveness level:</label>
+                <input
+                  className="custom-range"
+                  type="range"
+                  min="1"
+                  max="5"
+                  name="indecisiveness"
+                  onInput={handleChange}
+                  onBlur={handleBlur}
+                  defaultValue={values.indecisiveness || ""}
+                />
+                <small className="text-muted d-flex justify-content-between">
+                  <span>Lost</span>
+                  <span>Considering alternatives</span>
+                  <span>Resolved</span>
+                </small>
+              </div>
+
+              <div className="form-group">
+                <label>Deadline:</label>
                 <input
                   type="text"
                   name="deadline"
@@ -205,28 +196,121 @@ const Dilemma = (props) => {
                   onBlur={handleBlur}
                   required
                 />
-              ) : (
+              </div>
+            </Accordion>
+
+            <button type="submit" className="btn mx-1 btn-dark float-right">
+              Save
+            </button>
+            <button
+              onClick={deleteDilemma}
+              className="btn mx-1 btn-secondary float-right"
+            >
+              Delete
+            </button>
+          </form>
+        </Card>
+      ) : (
+        <Card title="Dilemma">
+          <form noValidate>
+            <label>Here's what you're working on:</label>
+            <div className="form-group">
+              <textarea
+                className="form-control"
+                rows="3"
+                name="title"
+                value={data.title}
+                readOnly
+              />
+            </div>
+
+            <label>Decision:</label>
+            <div className="input-group">
+              <select className="custom-select" name="chosenOption" disabled>
+                {data.chosenOption ? (
+                  <option value={data.chosenOption}>{data.chosenOption.title}</option>
+                ) : (
+                  <option>Choose...</option>
+                )}
+              </select>
+            </div>
+
+            {data.importance ? (
+              <div className="form-group mt-3">
+                <label>Decision importance:</label>
+                <input
+                  className="custom-range"
+                  type="range"
+                  min="1"
+                  max="5"
+                  name="importance"
+                  value={data.importance}
+                  readOnly
+                />
+                <small className="text-muted d-flex justify-content-between">
+                  <span>Fairly trivial</span>
+                  <span>Serious</span>
+                  <span>Life-changing</span>
+                </small>
+              </div>
+            ) : null}
+
+            {data.indecisiveness ? (
+              <div className="form-group">
+                <label>Indecisiveness level:</label>
+                <input
+                  className="custom-range"
+                  type="range"
+                  min="1"
+                  max="5"
+                  name="indecisiveness"
+                  value={data.indecisiveness}
+                  readOnly
+                />
+                <small className="text-muted d-flex justify-content-between">
+                  <span>Lost</span>
+                  <span>Considering alternatives</span>
+                  <span>Resolved</span>
+                </small>
+              </div>
+            ) : null}
+
+            {data.deadline ? (
+              <div className="form-group">
+                <label>Deadline:</label>
                 <input
                   type="text"
                   name="deadline"
-                  className="form-control-plaintext"
-                  value={values.deadline || ""}
-                  readOnly
+                  className="form-control"
+                  value={data.deadline}
+                  disabled
                 />
-              )}
+              </div>
+            ) : null}
+
+            <div className="mt-3">
+              <button
+                onClick={nextStep}
+                className="btn ml-1 btn-dark float-right"
+              >
+                Next
+              </button>
+              <button
+                onClick={editForm}
+                className="btn ml-1 btn-secondary float-right"
+              >
+                Edit
+              </button>
+              <button
+                onClick={deleteDilemma}
+                className="btn ml-1 btn-secondary float-right"
+              >
+                Delete
+              </button>
             </div>
-          </Accordion>
-          <button type="submit" className="btn mx-1 btn-dark float-right">
-            {isEditing ? "Save" : "Edit"}
-          </button>
-          <button
-            onClick={deleteDilemma}
-            className="btn mx-1 btn-secondary float-right"
-          >
-            Delete
-          </button>
-        </form>
-      </Card>
+          </form>
+        </Card>
+      )}
     </>
   );
 };

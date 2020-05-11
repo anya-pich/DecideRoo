@@ -13,17 +13,17 @@ const JumpTo = (props) => {
 
 
 	return (
-		<main>
+		<main className="mb-5">
 			{ step>2 &&
 			 <Random {...props} />
 			}
 
 			{ step>1 &&
-			 <Options {...props} />
+			 <Options {...props} nextStep={nextStep} />
 			}
 
 			{ step>0 &&
-			 <Dilemma {...props} />
+			 <Dilemma {...props} nextStep={nextStep} />
 			}
 
 			<Card
