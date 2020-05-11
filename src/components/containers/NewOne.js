@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Info from "../Info";
 import Dilemma from "../Dilemma";
 import Options from "../Options";
+import ToolLinks from "../ToolLinks";
 
 const NewOne = (props) => {
   const [step, setStep] = useState(0);
@@ -12,7 +13,8 @@ const NewOne = (props) => {
   const saveDecisionId = (id) => setDecisionId(id);
 
   return (
-    <main>
+    <main className="mb-5">
+      {step >= 3 && <ToolLinks nextStep={nextStep} decisionId={decisionId} />}
       {step >= 2 && <Options nextStep={nextStep} decisionId={decisionId} />}
       {step >= 1 && (
         <Dilemma nextStep={nextStep} saveDecisionId={saveDecisionId} />

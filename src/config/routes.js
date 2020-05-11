@@ -20,12 +20,14 @@ export default () => (
   <Switch>
     <Route exact path="/" component={Landing} />
     <Route path="/new" component={NewOne} />
+    <Route exact path="/dilemmas/:id/jump-to-conclusions" component={JumpTo} />
+    <Route exact path="/dilemmas/:id/six-hats" component={SixHats} />
+    <Route exact path="/dilemmas/:id/methodical-method" component={Mathsy} />
     <Route path="/dilemmas/:id" component={DecisionShow} />
     <Route path="/show-all" component={ShowAll} />
     <Route path="/show-one" component={ShowOne} />
     <Route path="/jump-to" component={JumpTo} />
     <Route path="/six-hats" component={SixHats} />
-    <Route path="/mathsy" component={Mathsy} />
     <Route path="/test" component={Test} />
     <Route path="/login" component={Auth} />
     <Route path="/register" component={Auth} />
