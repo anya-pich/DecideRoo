@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useContext,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import useForm from "./hooks/useForm";
@@ -12,6 +6,10 @@ import useForm from "./hooks/useForm";
 const Option = (props) => {
   const [isEditing, setIsEditing] = useState(true);
   const [apiRes, setApiRes] = useState({});
+
+  useEffect(() => {
+    props.update();
+  }, [apiRes]);
 
   const onSubmit = () => {
     if (!isEditing) {
@@ -21,7 +19,7 @@ const Option = (props) => {
     } else {
       updateOption();
     }
-  }
+  };
 
   // form handling
   const {
@@ -45,51 +43,71 @@ const Option = (props) => {
       })
       .catch((err) => console.log(err));
   };
-  
+
   // update to API
   const updateOption = () => {
     const data = { ...values, decision: props.decisionId };
-    axios.put(`${process.env.REACT_APP_API_URL}/options/${props.decisionId}`, data)
-      .then(res => {
+    axios
+      .put(`${process.env.REACT_APP_API_URL}/options/${apiRes._id}`, data)
+      .then((res) => {
         setApiRes(res.data);
         console.log(res.data);
         setIsEditing(false);
       })
-      .catch(err => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
   // delete to API
-  const deleteOption = (event) => {
+  const handleDelete = (event) => {
     event.preventDefault();
-    axios.delete(`${process.env.REACT_APP_API_URL}/options/${props.decisionId}`)
-      .then(res => {
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/options/${apiRes._id}`)
+      .then((res) => {
+        setApiRes(res.data);
         console.log(res.data);
       })
-      .catch(err => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
   return (
-    <div key={props._id || ""}>
+    <div className="input-group my-2" key={props._id || ""}>
       {isEditing ? (
-        <form>
-					
-          <input
-						className="form-control"
-              type="text"
-              name="deadline"
-              placeholder="Enter your deadline"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.deadline || ""}
-					/>
-          <button type="submit" className="btn mx-1 btn-dark float-right">
-          Add
-        </button>
-				</form>
-				
+        <input
+          className="form-control"
+          type="text"
+          name="title"
+          placeholder="Potential course of action"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.title || ""}
+        />
       ) : (
-        <span></span>
+        <input
+          className="form-control"
+          type="text"
+          name="title"
+          value={values.title || ""}
+          readOnly
+        />
       )}
+      <div className="input-group-append" id="button-addon4">
+        {apiRes._id && (
+          <button
+            onClick={handleDelete}
+            className="btn btn-outline-secondary"
+            type="button"
+          >
+            Delete
+          </button>
+        )}
+        <button
+          className="btn btn-outline-dark"
+          type="submit"
+          onClick={handleSubmit}
+        >
+          {isEditing ? "Save" : "Edit"}
+        </button>
+      </div>
     </div>
   );
 };
